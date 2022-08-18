@@ -1,0 +1,23 @@
+class Solution {
+public:
+    string convert(string s, int numRows) {
+        
+        string newStr =  "";
+        vector<string>v(numRows+1); int ind = 0;
+        
+       while(ind<s.size()){
+           
+           for(int i=0;i<numRows and ind<s.size();i++){
+            v[i]+=s[ind++];
+           }
+            for(int i=numRows-2;i>0 and ind<s.size();i--){
+              v[i]+=s[ind++];
+           }
+       }
+        for(auto ss:v){
+            newStr+=ss;
+        }
+        return newStr;
+        
+    }
+};
