@@ -1,0 +1,39 @@
+class Solution {
+public:
+    int romanToInt(string s) {
+       map<string,int>mp;
+        mp["I"]=1;
+        mp["V"]=5;
+        mp[ "X"]=10;
+        mp["L"]=50;
+        mp["C"]=100;
+        mp["D"]=500;
+        mp["M"]=1000;
+        int num = 0,ans = 0;
+        for(int i=s.size()-1;i>=0;i--){
+            ans = 0;
+            if(s[i]=='I'){
+               ans=mp["I"];
+            }else  if(s[i]=='V'){
+                 ans=mp["V"];
+            }else  if(s[i]=='X'){
+                 ans=mp["X"];
+            }
+            else  if(s[i]=='L'){
+               ans=mp["L"];
+            }else if(s[i]=='C'){
+                ans=mp["C"];
+            }else if(s[i]=='D'){
+                ans=mp["D"];
+            }else  if(s[i]=='M'){
+               ans=mp["M"];
+            }
+            if(4*ans<num){
+             num-=ans;    
+            }else num+=ans;
+            
+               
+        }
+        return num;
+    }
+};
