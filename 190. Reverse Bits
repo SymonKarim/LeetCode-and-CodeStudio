@@ -1,0 +1,18 @@
+class Solution {
+public:
+    uint32_t reverseBits(uint32_t n) {
+        vector<int>v(32,0);
+        int ind = 0;
+        while(n!=0){
+            v[ind++] = (n%2);
+            n/=2;
+        }
+        reverse(v.begin(),v.end());
+        uint32_t mul = 1, ans = 0;
+        for(auto i:v){
+            ans += mul*i;
+            mul*=2;
+        }
+        return ans;
+    }
+};
