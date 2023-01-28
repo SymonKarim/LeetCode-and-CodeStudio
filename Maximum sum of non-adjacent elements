@@ -9,6 +9,18 @@ int solve(vector<int> &nums,vector<int> &dp,int n){
         return dp[n];
     
 }
+//tabular(bottomup approach)
+int solve2(vector<int> &nums,int n){
+  vector<int>dp(n+5,0);
+  dp[0] = nums[0];
+  int ans;
+  for(int i=1;i<n;i++){
+      int inc = nums[i]+dp[i-2];
+      int exc = 0 + dp[i-1];
+      dp[i] = max(inc,exc);
+  }
+  return dp[n-1];
+}
 int maximumNonAdjacentSum(vector<int> &nums){
     // Write your code here.
     vector<int>dp(nums.size()+5,-1);
