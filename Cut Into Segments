@@ -10,9 +10,19 @@ int solve(int n,int x,int y,int z,vector<int>&dp){
 	dp[n] = max(a,max(b,c));
 
 }
+int solveTabular(int n,int x,int y,int z,vector<int>&dp){
+	dp[0] = 0;
+
+	for(int i=1;i<=n;i++){
+            if(i-x>=0) dp[i] = max(dp[i],1+dp[i-x]);
+			if(i-y>=0) dp[i] = max(dp[i],1+dp[i-y]);
+			if(i-z>=0) dp[i] = max(dp[i],1+dp[i-z]);
+	}
+	return dp[n]<0? 0 : dp[n];
+}
 int cutSegments(int n, int x, int y, int z) {
   vector<int>dp(n+5,INT_MIN);
-  int ans = solve(n,x,y,z,dp);
+  int ans = solveTabular(n,x,y,z,dp);
   if(ans<0) return 0;
   return ans;
 }
