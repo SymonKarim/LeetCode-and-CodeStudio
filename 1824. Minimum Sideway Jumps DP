@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int n;
+    int solve(vector<int>& obstacles,int pos,int lane, vector<vector<int>>&dp){
+        if(pos==n) return 0;
+        if(dp[lane][pos]!=-1) return dp[lane][pos];
+        if(obstacles[pos+1]!=lane){
+           return solve(obstacles,pos+1,lane,dp);
+        }else{
+            int ans = INT_MAX;
+            for(int i=1;i<=3;i++){
+              if(obstacles[pos]!=i && i!=lane)
+                 ans = min(ans,1+solve(obstacles, pos,i,dp));
+            }
+            return dp[lane][pos]=ans;
+        }
+       
+    }
+    int minSideJumps(vector<int>& obstacles) {
+        n = obstacles.size()-1;
+        vector<vector<int>>dp(4,vector<int>(n,-1));
+        return solve(obstacles,0,2,dp);
+    }
+};
