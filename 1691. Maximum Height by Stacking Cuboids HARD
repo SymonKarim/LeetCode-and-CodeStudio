@@ -1,0 +1,68 @@
+class Solution {
+public:
+/*        bool check(vector<int>&b, vector<int>&a){
+       return a[0]<=b[0] && a[1]<=b[1] && a[2] <=b[2];
+   }
+    int solve(int n,vector<vector<int>>& cuboids){
+        if(n==0) return 0;
+        vector<int>curRow(n+5,0),nextRow(n+5,0);
+
+        for(int i= n-1;i>=0;i--){
+            for(int prev = i-1;prev>=-1;prev--){
+               int inc = 0 , exc = 0;
+               if(prev==-1 or check (cuboids[i], cuboids[prev])){
+                   inc = cuboids[i][2] + nextRow[i+1];
+               }
+               exc =0+ nextRow[prev+1];
+               curRow[prev+1] = max(inc,exc);
+            }
+            nextRow = curRow;
+        }
+        return nextRow[0];
+    }
+      int solve2(int n,vector<vector<int>>& cuboids){
+        if(n==0) return 0;
+        vector<vector<int>>dp(n+5,vector<int>(n+5,0));
+     
+        for(int i= n-1;i>=0;i--){
+            for(int prev = i-1;prev>=-1;prev--){
+               int inc = 0 , exc = 0;
+               if(prev==-1 or check (cuboids[i], cuboids[prev])){
+                   inc = cuboids[i][2] + dp[i+1][i];
+               }
+               exc =0+dp[i+1][prev+1];
+             
+               dp[i][prev+1] = max(inc,exc);
+               }
+        }
+        return dp[0][0];
+    }*/
+bool check(vector<int> a, vector<int> b){
+    return a[0]>=b[0] && a[1]>=b[1] and a[2]>=b[2];
+}
+    int solve(vector<vector<int>>& cuboids,int n) {
+        if(n==0) return 0;
+        vector<int> next(n+5,0),cur(n+5,0);
+
+        for(int i=n-1;i>=0;i--){
+            for(int j=i-1;j>=-1;j--){
+                  int take = 0 , noTake = 0;
+                  if(j==-1 or check(cuboids[i], cuboids[j])){
+                        take = cuboids[i][2] + next[i+1];
+                  }
+                  noTake = 0 + next[j+1];
+                  cur[j+1] = max(take,noTake);
+            }
+            next= cur;
+        }
+        return next[0];
+    }
+ 
+    int maxHeight(vector<vector<int>>& cuboids) {
+        for(auto &row:cuboids){
+            sort(row.begin(),row.end());
+        }
+        sort(cuboids.begin(),cuboids.end());
+        return solve(cuboids,cuboids.size());
+    }
+};
