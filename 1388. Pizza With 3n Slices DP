@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int solve(int index,int endIndex, vector<int>& slices , int n,vector<vector<int>>&dp){
+        if(n == 0 or index > endIndex) return 0;
+        if(dp[index][n]!=-1) return dp[index][n];
+        int eat = slices[index]  + solve(index+2,endIndex, slices, n-1,dp);
+        int notEat = 0 + solve(index+1,endIndex , slices, n,dp);
+     
+        return dp[index][n] = max(eat, notEat);
+    }
+    int maxSizeSlices(vector<int>& slices) {
+        int n = slices.size();
+        int cap = n/3;
+        vector<vector<int>>dp(n+5, vector<int>(n+5,-1));
+        int op1 = solve(0, n-2,slices,cap,dp);
+         vector<vector<int>>dp1(n+5, vector<int>(n+5,-1));
+        int op2 = solve(1, n-1,slices,cap,dp1);
+        return max(op1, op2);
+    }
+};
