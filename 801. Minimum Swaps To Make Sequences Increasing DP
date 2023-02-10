@@ -1,0 +1,31 @@
+class Solution {
+public:
+   
+    int solve(int index,vector<int>& nums1, vector<int>& nums2, int &n, bool swapped, vector<vector<int>>&dp){
+        if(n<=2) return n;
+        if(index>=n) return 0;
+        if(dp[index][swapped]!=-1) return dp[index][swapped];
+        int ans = INT_MAX;
+        int val1 = nums1[index-1];
+        int val2 = nums2[index-1];
+        if(swapped){
+            swap(val1,val2);
+        }
+      
+       if(nums1[index]  > val1 and  nums2[index] > val2){
+          ans = solve(index+1, nums1, nums2, n, 0,dp);
+       }
+        if(nums1[index]>val2 and nums2[index]> val1){
+         ans = min(ans, 1+solve(index+1, nums1, nums2, n, 1,dp) );
+        }
+        return dp[index][swapped]= ans;
+    }
+    int minSwap(vector<int>& nums1, vector<int>& nums2) {
+      
+        nums1.insert(nums1.begin(), -1);
+        nums2.insert(nums2.begin(), -1); 
+        int n = nums1.size();  
+        vector<vector<int>>dp(n+1 , vector<int>(2,-1));
+        return solve(1,nums1,nums2, n, 0,dp);
+    }
+};
