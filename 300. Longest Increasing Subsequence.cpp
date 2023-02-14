@@ -1,3 +1,4 @@
+
 class Solution {
 public:
     int solve(vector<int>&nums,int n, int index, int prev,vector<vector<int>>&dp){
@@ -11,8 +12,24 @@ public:
         return dp[index][prev+1] = max(x,y);
 
     }
+    int solveTabular(vector<int>& nums){
+        int n = nums.size(),mx = 1;
+        vector<int>dp(n+1,0);
+
+         for(int i=0;i<n;i++){
+             dp[i] =1;
+            for(int j=0;j<i;j++){
+                if(nums[i]>nums[j]){
+                    dp[i] = max(dp[i], 1+dp[j]);
+                }
+                mx = max(dp[i],mx);
+            }
+         }
+         return mx;
+    }
     int lengthOfLIS(vector<int>& nums) {
-        vector<vector<int>>dp(nums.size()+1, vector<int>(nums.size()+1,-1));
-        return solve(nums, nums.size(), 0,-1,dp);
+     //   vector<vector<int>>dp(nums.size()+1, vector<int>(nums.size()+1,-1));
+      //  return solve(nums, nums.size(), 0,-1,dp);
+       return solveTabular(nums);
     }
 };
